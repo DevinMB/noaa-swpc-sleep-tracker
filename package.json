@@ -1,0 +1,56 @@
+{
+  "name": "noaa-swpc-sleep-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx scripts/seed-db.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevinMB/noaa-swpc-sleep-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevinMB/noaa-swpc-sleep-tracker/issues"
+  },
+  "homepage": "https://github.com/DevinMB/noaa-swpc-sleep-tracker#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "d3": "^7.9.0",
+    "drizzle-orm": "^0.45.1",
+    "framer-motion": "^12.38.0",
+    "next": "^16.2.1",
+    "node-cron": "^4.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "recharts": "^3.8.0",
+    "swr": "^2.4.1",
+    "topojson-client": "^3.1.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/d3": "^7.4.3",
+    "@types/node": "^25.5.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/react": "^19.2.14",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-specification": "^1.0.5",
+    "drizzle-kit": "^0.31.10",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}

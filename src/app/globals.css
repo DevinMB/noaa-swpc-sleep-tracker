@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cosmic purple palette */
+  --color-cosmic-50: #f3f0ff;
+  --color-cosmic-100: #e5dbff;
+  --color-cosmic-200: #c4b5fd;
+  --color-cosmic-300: #a78bfa;
+  --color-cosmic-400: #8b5cf6;
+  --color-cosmic-500: #7c3aed;
+  --color-cosmic-600: #6d28d9;
+  --color-cosmic-700: #5b21b6;
+  --color-cosmic-800: #4c1d95;
+  --color-cosmic-900: #2e1065;
+  --color-cosmic-950: #1a0a3e;
+
+  /* Surface colors */
+  --color-surface: #13112b;
+  --color-surface-light: #1e1a3f;
+  --color-surface-dark: #0a0a1a;
+
+  /* Fonts */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Custom utilities */
+@layer base {
+  body {
+    background-color: var(--color-surface-dark);
+    color: #e2e0f0;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Glow effects */
+.glow {
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+.glow-lg {
+  box-shadow: 0 0 40px rgba(124, 58, 237, 0.4);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(19, 17, 43, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cosmic-800);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cosmic-700);
+}

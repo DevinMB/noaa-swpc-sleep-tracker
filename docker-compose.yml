@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: cosmic-sleep-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data/db:/app/data
+    environment:
+      - DATABASE_URL=/app/data/cosmic-sleep.db
+    networks:
+      - cosmic-net
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cosmic-sleep-tunnel
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - cosmic-net
+    depends_on:
+      - app
+
+networks:
+  cosmic-net:
+    driver: bridge
