@@ -79,7 +79,9 @@ export async function POST(request: NextRequest) {
       .update(ip)
       .digest("hex");
 
-    const today = new Date().toISOString().slice(0, 10);
+    const now = new Date();
+    const utcTimestamp = now.toISOString();
+    const today = utcTimestamp.slice(0, 10);
 
     // Check if this fingerprint already submitted today
     const existingFingerprint = await db
@@ -124,6 +126,7 @@ export async function POST(request: NextRequest) {
       fingerprintHash,
       ipHash,
       date: today,
+      createdAt: utcTimestamp,
     });
 
     // Store the sleep report
@@ -133,6 +136,8 @@ export async function POST(request: NextRequest) {
       sleepQuality: parsed.sleepQuality,
       region: parsed.region || null,
       source: "self_report",
+      submittedAt: utcTimestamp,
+      createdAt: utcTimestamp,
     });
 
     return NextResponse.json({ success: true, id: result.lastInsertRowid });

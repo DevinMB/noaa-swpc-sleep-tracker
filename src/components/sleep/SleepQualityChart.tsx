@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -9,36 +10,60 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import type { DailyAverage } from "@/hooks/useSleepData";
+import type { SleepLog } from "@/hooks/useSleepData";
+import { getLocalDate, toLocalDateStr } from "@/lib/utils/localDate";
 
 interface SleepQualityChartProps {
-  data: DailyAverage[] | null;
+  data: SleepLog[] | null;
 }
 
 export function SleepQualityChart({ data }: SleepQualityChartProps) {
-  if (!data || data.length === 0) {
+  const chartData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+
+    const today = toLocalDateStr(new Date());
+
+    // Bucket by local date
+    const buckets = new Map<
+      string,
+      { totalQuality: number; totalHours: number; count: number }
+    >();
+
+    for (const log of data) {
+      const localDate = getLocalDate(log);
+      if (localDate > today) continue;
+
+      const bucket = buckets.get(localDate) ?? {
+        totalQuality: 0,
+        totalHours: 0,
+        count: 0,
+      };
+      bucket.totalQuality += log.sleepQuality;
+      bucket.totalHours += log.sleepHours;
+      bucket.count += 1;
+      buckets.set(localDate, bucket);
+    }
+
+    return Array.from(buckets.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([date, bucket]) => ({
+        date: new Date(date + "T00:00:00").toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
+        quality: Math.round((bucket.totalQuality / bucket.count) * 10) / 10,
+        hours: Math.round((bucket.totalHours / bucket.count) * 10) / 10,
+        reports: bucket.count,
+      }));
+  }, [data]);
+
+  if (chartData.length === 0) {
     return (
       <div className="flex h-full items-center justify-center text-cosmic-300/40">
         No sleep data yet. Be the first to report!
       </div>
     );
   }
-
-  const now = new Date();
-  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-
-  const chartData = [...data]
-    .filter((entry) => entry.date <= today)
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .map((entry) => ({
-      date: new Date(entry.date + "T00:00:00").toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      }),
-      quality: Math.round(entry.avgQuality * 10) / 10,
-      hours: Math.round(entry.avgHours * 10) / 10,
-      reports: entry.count,
-    }));
 
   return (
     <ResponsiveContainer width="100%" height="100%">

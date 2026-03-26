@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "recharts";
 import type { SleepLog } from "@/hooks/useSleepData";
+import { getLocalDate, toLocalDateStr } from "@/lib/utils/localDate";
 
 type GroupMode = "day" | "week" | "month";
 
@@ -60,7 +61,7 @@ function getDateRange(
   mode: GroupMode
 ): { start: string; end: string } {
   if (mode === "day") {
-    const s = anchor.toISOString().slice(0, 10);
+    const s = toLocalDateStr(anchor);
     return { start: s, end: s };
   }
   if (mode === "week") {
@@ -68,8 +69,8 @@ function getDateRange(
     const weekEnd = new Date(weekStart);
     weekEnd.setDate(weekEnd.getDate() + 6);
     return {
-      start: weekStart.toISOString().slice(0, 10),
-      end: weekEnd.toISOString().slice(0, 10),
+      start: toLocalDateStr(weekStart),
+      end: toLocalDateStr(weekEnd),
     };
   }
   // month
@@ -78,8 +79,8 @@ function getDateRange(
   const first = new Date(year, month, 1);
   const last = new Date(year, month + 1, 0);
   return {
-    start: first.toISOString().slice(0, 10),
-    end: last.toISOString().slice(0, 10),
+    start: toLocalDateStr(first),
+    end: toLocalDateStr(last),
   };
 }
 
@@ -99,7 +100,10 @@ export function SleepDistribution({ data }: SleepDistributionProps) {
   const filteredData = useMemo(() => {
     if (!data) return [];
     const { start, end } = getDateRange(displayAnchor, mode);
-    return data.filter((log) => log.date >= start && log.date <= end);
+    return data.filter((log) => {
+      const localDate = getLocalDate(log);
+      return localDate >= start && localDate <= end;
+    });
   }, [data, displayAnchor, mode]);
 
   const chartData = useMemo(() => {

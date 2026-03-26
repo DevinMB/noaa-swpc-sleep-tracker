@@ -71,5 +71,11 @@ export function runMigrations(dbPath?: string) {
     sqlite.exec("ALTER TABLE poll_fingerprints ADD COLUMN ip_hash TEXT");
   }
 
+  // Migration: add submitted_at column to sleep_logs
+  const sleepCols = sqlite.pragma("table_info(sleep_logs)") as { name: string }[];
+  if (!sleepCols.some((c) => c.name === "submitted_at")) {
+    sqlite.exec("ALTER TABLE sleep_logs ADD COLUMN submitted_at TEXT");
+  }
+
   sqlite.close();
 }

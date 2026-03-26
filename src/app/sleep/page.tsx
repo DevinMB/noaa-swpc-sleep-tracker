@@ -56,7 +56,7 @@ export default function SleepPage() {
             action={isLoading ? <Badge variant="info">Loading</Badge> : undefined}
           />
           <div className="h-64">
-            <SleepQualityChart data={data?.dailyAverages ?? null} />
+            <SleepQualityChart data={data?.logs ?? null} />
           </div>
         </Card>
 

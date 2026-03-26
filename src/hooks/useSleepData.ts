@@ -9,6 +9,7 @@ export interface SleepLog {
   sleepQuality: number;
   region: string | null;
   source: string;
+  submittedAt: string | null;
   createdAt: string;
 }
 

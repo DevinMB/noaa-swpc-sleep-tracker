@@ -41,6 +41,7 @@ export const sleepLogs = sqliteTable("sleep_logs", {
   sleepQuality: integer("sleep_quality").notNull(), // 1-10
   region: text("region"), // optional geographic region
   source: text("source").notNull().default("self_report"), // 'self_report' | 'nhanes' | 'kaggle'
+  submittedAt: text("submitted_at"), // Full ISO 8601 UTC timestamp, set server-side
   createdAt: text("created_at").notNull().default("(datetime('now'))"),
 });
 
