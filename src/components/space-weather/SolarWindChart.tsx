@@ -31,9 +31,12 @@ export function SolarWindChart({ data }: SolarWindChartProps) {
     );
   }
 
-  // Downsample for chart performance (take every Nth point)
-  const step = Math.max(1, Math.floor(data.length / 200));
-  const chartData = data
+  // Sort chronologically and downsample for chart performance
+  const sorted = [...data].sort(
+    (a, b) => new Date(a.time_tag).getTime() - new Date(b.time_tag).getTime()
+  );
+  const step = Math.max(1, Math.floor(sorted.length / 200));
+  const chartData = sorted
     .filter((_, i) => i % step === 0)
     .map((entry) => ({
       time: new Date(entry.time_tag).toLocaleString("en-US", {
