@@ -24,7 +24,10 @@ export function SleepQualityChart({ data }: SleepQualityChartProps) {
     );
   }
 
+  const today = new Date().toISOString().slice(0, 10);
+
   const chartData = [...data]
+    .filter((entry) => entry.date <= today)
     .sort((a, b) => a.date.localeCompare(b.date))
     .map((entry) => ({
       date: new Date(entry.date + "T00:00:00").toLocaleDateString("en-US", {
