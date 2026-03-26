@@ -64,9 +64,9 @@ export default function SleepPage() {
         <Card className="lg:col-span-2">
           <CardHeader
             title="Sleep Hours Distribution"
-            subtitle="All community reports"
+            subtitle="Community reports by period"
           />
-          <div className="h-48">
+          <div className="h-64">
             <SleepDistribution data={data?.logs ?? null} />
           </div>
         </Card>
