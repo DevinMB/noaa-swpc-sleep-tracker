@@ -85,10 +85,10 @@ export function KpIndexGauge({ value, label }: KpIndexGaugeProps) {
         <circle cx={cx} cy={cy} r="4" fill={color} />
 
         {/* Scale labels */}
-        <text x="15" y="108" fill="#a78bfa" fontSize="10" fontFamily="var(--font-mono)">
+        <text x="17" y="116" fill="#a78bfa" fontSize="10" fontFamily="var(--font-mono)">
           0
         </text>
-        <text x="178" y="108" fill="#a78bfa" fontSize="10" fontFamily="var(--font-mono)">
+        <text x="177" y="116" fill="#a78bfa" fontSize="10" fontFamily="var(--font-mono)">
           9
         </text>
       </svg>
