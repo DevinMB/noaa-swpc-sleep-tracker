@@ -132,14 +132,14 @@ export function SleepDistribution({ data }: SleepDistributionProps) {
   return (
     <div className="flex h-full flex-col">
       {/* Controls */}
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         {/* Group mode toggle */}
-        <div className="flex rounded-lg border border-cosmic-800/30 bg-surface-dark/50 p-0.5">
+        <div className="flex self-start rounded-lg border border-cosmic-800/30 bg-surface-dark/50 p-0.5">
           {(["day", "week", "month"] as GroupMode[]).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+              className={`rounded-md px-2 py-1 text-xs font-medium transition-all ${
                 mode === m
                   ? "bg-cosmic-500/20 text-cosmic-200"
                   : "text-cosmic-300/50 hover:text-cosmic-300"
@@ -151,7 +151,7 @@ export function SleepDistribution({ data }: SleepDistributionProps) {
         </div>
 
         {/* Date navigation */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 self-end">
           <button
             onClick={() => navigate(-1)}
             className="rounded-md p-1 text-cosmic-300/60 transition-colors hover:bg-cosmic-500/10 hover:text-cosmic-200"
@@ -172,7 +172,7 @@ export function SleepDistribution({ data }: SleepDistributionProps) {
 
           <button
             onClick={goToToday}
-            className="min-w-[120px] rounded-md px-2 py-1 text-center text-xs font-medium text-cosmic-300 transition-colors hover:bg-cosmic-500/10 hover:text-cosmic-200"
+            className="shrink-0 rounded-md px-1.5 py-1 text-center text-xs font-medium text-cosmic-300 transition-colors hover:bg-cosmic-500/10 hover:text-cosmic-200"
           >
             {formatDateLabel(displayAnchor, mode)}
           </button>
